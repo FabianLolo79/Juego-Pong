@@ -8,10 +8,12 @@ public class Ball : MonoBehaviour
     [SerializeField] private float initialVelicity = 4f;
     [SerializeField] private float velocityMultiplier = 1.1f;
     private Rigidbody2D ballRb;
+    private AudioSource ballAudioSource;
 
     // Start is called before the first frame update
     void Start()
     {
+        ballAudioSource = GetComponent<AudioSource>();
         ballRb = GetComponent<Rigidbody2D>();
         Launch();
     }
@@ -28,6 +30,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Paddle"))
         {
             ballRb.velocity *= velocityMultiplier;
+            ballAudioSource.Play();
         }
     }
 
