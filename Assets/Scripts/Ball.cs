@@ -22,14 +22,14 @@ public class Ball : MonoBehaviour
     {
         float xVelocity = Random.Range(0, 2) == 0 ? 1 : -1;
         float yVelocity = Random.Range(0, 2) == 0 ? 1 : -1;
-        ballRb.velocity =  new Vector2(xVelocity, yVelocity) * initialVelicity;
+        ballRb.linearVelocity =  new Vector2(xVelocity, yVelocity) * initialVelicity;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Paddle"))
         {
-            ballRb.velocity *= velocityMultiplier;
+            ballRb.linearVelocity *= velocityMultiplier;
             ballAudioSource.Play();
         }
     }
