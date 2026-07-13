@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d0d063ab49d55804aa363043d1435b3d
+guid: 40232a398d1e4724c9f56e711e717750
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7302286294335077666
-    second: texturas-hierba-verde_74190-5443_0
+      213: 1320270888887383093
+    second: conBarras_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: texturas-hierba-verde_74190-5443_0
+      name: conBarras_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 740
-        height: 494
+        width: 788
+        height: 600
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 22dbb0e02bee65560800000000000000
-      internalID: 7302286294335077666
+      spriteID: 534fb6bd06b825210800000000000000
+      internalID: 1320270888887383093
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      texturas-hierba-verde_74190-5443_0: 7302286294335077666
+      conBarras_0: 1320270888887383093
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
