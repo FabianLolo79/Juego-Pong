@@ -1,20 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private float initialVelicity = 4f;
-    [SerializeField] private float velocityMultiplier = 1.1f;
-    private Rigidbody2D ballRb;
-    private AudioSource ballAudioSource;
+    [SerializeField] private float _initialVelicity = 4f;
+    [SerializeField] private float _velocityMultiplier = 1.1f;
+    private Rigidbody2D _ballRb;
+    private AudioSource _ballAudioSource;
 
-    // Start is called before the first frame update
     void Start()
     {
-        ballAudioSource = GetComponent<AudioSource>();
-        ballRb = GetComponent<Rigidbody2D>();
+        _ballAudioSource = GetComponent<AudioSource>();
+        _ballRb = GetComponent<Rigidbody2D>();
         Launch();
     }
 
@@ -22,32 +18,31 @@ public class Ball : MonoBehaviour
     {
         float xVelocity = Random.Range(0, 2) == 0 ? 1 : -1;
         float yVelocity = Random.Range(0, 2) == 0 ? 1 : -1;
-        ballRb.linearVelocity =  new Vector2(xVelocity, yVelocity) * initialVelicity;
+        _ballRb.linearVelocity = new Vector2(xVelocity, yVelocity) * _initialVelicity;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Paddle"))
         {
-            ballRb.linearVelocity *= velocityMultiplier;
-            ballAudioSource.Play();
+            _ballRb.linearVelocity *= _velocityMultiplier;
+            _ballAudioSource.Play(); // - esto es lo único nuevo
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Goal1"))
+        if (collision.gameObject.CompareTag("Goal1"))
         {
             GameManager.Instance.PaddleScored2();
             GameManager.Instance.Restart();
             Launch();
         }
-        else
+        else if (collision.gameObject.CompareTag("Goal2"))
         {
             GameManager.Instance.PaddleScored1();
             GameManager.Instance.Restart();
             Launch();
         }
     }
-
 }
