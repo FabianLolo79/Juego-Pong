@@ -26,7 +26,7 @@ public class Paddle : MonoBehaviour
         }
 
         // Configura el pan estereo
-        _paddleAudio.panStereo = isPaddle1 ? -1f : 1f;
+        _paddleAudio.panStereo = isPaddle1 ? 1f : -1f;
     }
 
     // Update is called once per frame
