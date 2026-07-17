@@ -1508,7 +1508,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: cad0379f18ed7e04f9fc764c1731d225, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2851,6 +2851,16 @@ MonoBehaviour:
   _playPanel: {fileID: 787208105}
   _characterPanel: {fileID: 923344632}
   _creditsPanel: {fileID: 1557934337}
+  _btnPlay: {fileID: 169000061}
+  _btnCredits: {fileID: 2091563957}
+  _btnExit: {fileID: 1930251589}
+  _btnSingle: {fileID: 259086251}
+  _btnPvP: {fileID: 1030450575}
+  _btnBackFromPlay: {fileID: 2103766991}
+  _btnLeftBlue: {fileID: 46894387}
+  _btnRightRed: {fileID: 1814848632}
+  _btnBackFromCharacter: {fileID: 2034738688}
+  _btnBackFromCredits: {fileID: 1828457518}
   _crowdMenuAudio: {fileID: 802083437}
 --- !u!4 &1709147286
 Transform:
