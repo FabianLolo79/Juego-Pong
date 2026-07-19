@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -24,6 +25,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button _btnLeftBlue;
     [SerializeField] private Button _btnRightRed;
     [SerializeField] private Button _btnBackFromCharacter;
+
+    [Header("Nombres - Character Panel")]
+    [Tooltip("Nombre del jugador Azul/Izquierda (Player 1). Siempre visible.")]
+    [SerializeField] private TMP_InputField _inputNameLeft;
+    [Tooltip("Nombre del jugador Rojo/Derecha (Player 2). Siempre visible.")]
+    [SerializeField] private TMP_InputField _inputNameRight;
 
     [Header("Botones - Credits Panel")]
     [SerializeField] private Button _btnBackFromCredits;
@@ -92,13 +99,53 @@ public class MainMenuManager : MonoBehaviour
     public void SelectLeftBlue()
     {
         MenuConfig.PlayerIsLeft = true;
+        AssignNames();
         StartGame();
     }
 
     public void SelectRightRed()
     {
         MenuConfig.PlayerIsLeft = false;
+        AssignNames();
         StartGame();
+    }
+
+    // Vuelca lo escrito en los inputs a MenuConfig antes de cargar la escena Game
+    private void AssignNames()
+    {
+        string leftFieldText = GetTrimmedOrNull(_inputNameLeft);
+        string rightFieldText = GetTrimmedOrNull(_inputNameRight);
+
+        if (MenuConfig.IsSinglePlayer)
+        {
+            // Cada input pertenece SIEMPRE a su lado. El lado que elijas jugar usa
+            // lo que escribiste en SU campo; el otro lado pasa a ser CPU (se ignora
+            // lo que hayas escrito ahi, si escribiste algo).
+            if (MenuConfig.PlayerIsLeft)
+            {
+                MenuConfig.LeftPlayerName = leftFieldText ?? "Player Azul";
+                MenuConfig.RightPlayerName = "CPU";
+            }
+            else
+            {
+                MenuConfig.LeftPlayerName = "CPU";
+                MenuConfig.RightPlayerName = rightFieldText ?? "Player Rojo";
+            }
+        }
+        else
+        {
+            MenuConfig.LeftPlayerName = leftFieldText ?? "Player Azul";
+            MenuConfig.RightPlayerName = rightFieldText ?? "Player Rojo";
+        }
+
+        Debug.Log($"[MainMenuManager] PlayerIsLeft={MenuConfig.PlayerIsLeft} | Izquierda(Azul)={MenuConfig.LeftPlayerName} | Derecha(Rojo)={MenuConfig.RightPlayerName}");
+    }
+
+    private string GetTrimmedOrNull(TMP_InputField field)
+    {
+        return (field != null && !string.IsNullOrWhiteSpace(field.text))
+            ? field.text.Trim()
+            : null;
     }
 
     private void StartGame()

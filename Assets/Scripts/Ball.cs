@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private float _initialVelicity = 4f;
+    [SerializeField] private float _initialVelicity = 5f;
     [SerializeField] private float _velocityMultiplier = 1.1f;
     [SerializeField] private float _goalWaitTime = 3f; // antes 9f - tiempo muerto tras el gol
     private Rigidbody2D _ballRb;
@@ -63,6 +63,10 @@ public class Ball : MonoBehaviour
 
         // 3. Espera el tiempo configurado tras el gol (SFX + feedback visual)
         yield return new WaitForSeconds(_goalWaitTime);
+
+        // Si alguien ya gano el partido, la pelota se queda quieta (no relanza)
+        if (GameManager.Instance.IsMatchOver)
+            yield break;
 
         // 4. Descongela y lanza
         _ballRb.isKinematic = false;
