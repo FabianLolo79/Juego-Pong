@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource _crowdGameAudio;
+    [SerializeField] private AudioSource _inStaduimAudio;
     [SerializeField] private AudioSource _goalAudio;
 
     [Header("VFX - Feedback de gol (marcador)")]
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _crowdGameAudio?.Play();
+        _inStaduimAudio?.Play();
         if (_matchMessageText != null)
             _matchMessageText.text = string.Empty;
 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 40232a398d1e4724c9f56e711e717750
+guid: af6637bfc76796447aaaceb82d50f000
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1320270888887383093
-    second: conBarras_0
+      213: 2435429132704978124
+    second: futbol-americano_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: conBarras_0
+      name: futbol-americano_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 788
-        height: 600
+        width: 512
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 534fb6bd06b825210800000000000000
-      internalID: 1320270888887383093
+      spriteID: cc4948a84e16cc120800000000000000
+      internalID: 2435429132704978124
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      conBarras_0: 1320270888887383093
+      futbol-americano_0: 2435429132704978124
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
