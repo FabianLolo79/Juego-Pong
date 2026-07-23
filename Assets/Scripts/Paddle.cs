@@ -13,7 +13,7 @@ public class Paddle : MonoBehaviour
     {
         _paddleAudio = GetComponent<AudioSource>();
         if (_paddleAudio != null)
-            _paddleAudio.panStereo = isPaddle1 ? -1f : 1f;
+            _paddleAudio.panStereo = isPaddle1 ? 1f : -1f;
 
         // Aplicar color según configuración del menú
         SpriteRenderer sr = GetComponent<SpriteRenderer>();

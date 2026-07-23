@@ -9,7 +9,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private KeyCode _pauseKey = KeyCode.Escape;
 
     [Header("Botones del panel de pausa")]
-    [SerializeField] private Button _btnResume;
+    [SerializeField] private Button _btnContinue;
     [SerializeField] private Button _btnExitToMenu;
 
     [Tooltip("Debe coincidir EXACTO con el nombre de tu escena de menu.")]
@@ -19,7 +19,7 @@ public class PauseManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_btnResume != null) _btnResume.onClick.AddListener(Resume);
+        if (_btnContinue != null) _btnContinue.onClick.AddListener(Resume);
         if (_btnExitToMenu != null) _btnExitToMenu.onClick.AddListener(ExitToMainMenu);
     }
 
