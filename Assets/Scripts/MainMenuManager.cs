@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class MainMenuManager : MonoBehaviour
@@ -35,6 +36,13 @@ public class MainMenuManager : MonoBehaviour
     [Header("Botones - Credits Panel")]
     [SerializeField] private Button _btnBackFromCredits;
 
+    [Header("Navegacion (teclado/gamepad)")]
+    [Tooltip("Primer boton seleccionado al mostrar cada panel, para poder navegar sin mouse.")]
+    [SerializeField] private Button _firstSelectedMain;
+    [SerializeField] private Button _firstSelectedPlay;
+    [SerializeField] private Button _firstSelectedCharacter;
+    [SerializeField] private Button _firstSelectedCredits;
+
     [Header("Audio")]
     [SerializeField] private AudioSource _crowdMenuAudio;
 
@@ -68,12 +76,12 @@ public class MainMenuManager : MonoBehaviour
             _crowdMenuAudio.Play();
     }
 
-    public void ShowMain() => SetPanel(_mainPanel);
-    public void ShowPlay() => SetPanel(_playPanel);
-    public void ShowCharacter() => SetPanel(_characterPanel);
-    public void ShowCredits() => SetPanel(_creditsPanel);
+    public void ShowMain() => SetPanel(_mainPanel, _firstSelectedMain);
+    public void ShowPlay() => SetPanel(_playPanel, _firstSelectedPlay);
+    public void ShowCharacter() => SetPanel(_characterPanel, _firstSelectedCharacter);
+    public void ShowCredits() => SetPanel(_creditsPanel, _firstSelectedCredits);
 
-    private void SetPanel(GameObject activePanel)
+    private void SetPanel(GameObject activePanel, Button firstSelected = null)
     {
         if (_mainPanel != null) _mainPanel.SetActive(false);
         if (_playPanel != null) _playPanel.SetActive(false);
@@ -82,6 +90,14 @@ public class MainMenuManager : MonoBehaviour
 
         if (activePanel != null)
             activePanel.SetActive(true);
+
+        // Sin esto, el teclado/gamepad no tiene de donde arrancar a navegar
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null); // limpia seleccion previa
+            if (firstSelected != null)
+                EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
+        }
     }
 
     public void SelectSinglePlayer()

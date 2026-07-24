@@ -182,7 +182,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9843137, g: 0.8862745, b: 0.26666668, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -517,7 +517,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9843137, g: 0.8862745, b: 0.26666668, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -792,7 +792,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9843137, g: 0.8862745, b: 0.26666668, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2363,7 +2363,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9843137, g: 0.8862745, b: 0.26666668, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3096,9 +3096,9 @@ MonoBehaviour:
   _matchEndPanel: {fileID: 111137112}
   _btnRestartMatch: {fileID: 1191344220}
   _btnExitToMenuFromEnd: {fileID: 809674307}
+  _firstSelectedMatchEnd: {fileID: 1191344220}
   _menuSceneName: Menu
   _crowdGameAudio: {fileID: 524743977}
-  _inStaduimAudio: {fileID: 896120283}
   _goalAudio: {fileID: 576565002}
   _punchScale: 1.3
   _punchDuration: 0.12
@@ -3465,7 +3465,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9843137, g: 0.8862745, b: 0.26666668, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4875,8 +4875,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
   _pausePanel: {fileID: 1341234856}
   _pauseKey: 27
-  _btnContinue: {fileID: 139040790}
+  _btnResume: {fileID: 139040790}
   _btnExitToMenu: {fileID: 21455374}
+  _firstSelectedPause: {fileID: 139040790}
   _menuSceneName: Menu
 --- !u!4 &2086432813
 Transform:

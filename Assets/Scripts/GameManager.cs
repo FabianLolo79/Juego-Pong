@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -28,12 +29,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _matchEndPanel;
     [SerializeField] private Button _btnRestartMatch;
     [SerializeField] private Button _btnExitToMenuFromEnd;
+    [Tooltip("Boton que se selecciona automaticamente al abrir el panel, para navegar con teclado/gamepad.")]
+    [SerializeField] private Button _firstSelectedMatchEnd;
     [Tooltip("Debe coincidir EXACTO con el nombre de tu escena de menu.")]
     [SerializeField] private string _menuSceneName = "Menu";
 
     [Header("Audio")]
     [SerializeField] private AudioSource _crowdGameAudio;
-    [SerializeField] private AudioSource _inStaduimAudio;
     [SerializeField] private AudioSource _goalAudio;
 
     [Header("VFX - Feedback de gol (marcador)")]
@@ -67,6 +69,9 @@ public class GameManager : MonoBehaviour
     // Ball.cs consulta esto antes de relanzar: si el partido termino, la pelota queda quieta
     public bool IsMatchOver => _matchEnded;
 
+    // Expuesto solo para que PauseManager pueda detectar si por error comparten el mismo panel
+    public GameObject MatchEndPanelRef => _matchEndPanel;
+
     private void Awake()
     {
         if (_btnRestartMatch != null) _btnRestartMatch.onClick.AddListener(RestartMatch);
@@ -87,7 +92,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _crowdGameAudio?.Play();
-        _inStaduimAudio?.Play();
         if (_matchMessageText != null)
             _matchMessageText.text = string.Empty;
 
@@ -147,8 +151,7 @@ public class GameManager : MonoBehaviour
         }
         else if (isTiedBeforeWin)
         {
-            return;
-            //ShowTemporaryMessage($"EMPATE {_paddleScore1}-{_paddleScore2}. GOL DE ORO: el proximo gol define el partido!", 2f);
+            ShowTemporaryMessage($"EMPATE {_paddleScore1}-{_paddleScore2}. GOL DE ORO: el proximo gol define el partido!", 2f);
         }
     }
 
@@ -169,6 +172,14 @@ public class GameManager : MonoBehaviour
 
         if (_matchEndPanel != null)
             _matchEndPanel.SetActive(true);
+
+        // Sin esto, el teclado/gamepad no tiene de donde arrancar a navegar el panel
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            if (_firstSelectedMatchEnd != null)
+                EventSystem.current.SetSelectedGameObject(_firstSelectedMatchEnd.gameObject);
+        }
     }
 
     private void ShowMessage(string msg)
@@ -204,6 +215,7 @@ public class GameManager : MonoBehaviour
     // confiable de resetear marcador, pelota, paddles y estado interno todo junto.
     public void RestartMatch()
     {
+        Debug.Log("[GameManager] RestartMatch() -> recargando escena Game (esto borra el marcador)");
         SceneFlow.ExitToMenu(SceneManager.GetActiveScene().name);
     }
 
@@ -250,7 +262,12 @@ public class GameManager : MonoBehaviour
                 Random.Range(_confettiAreaMin.y, _confettiAreaMax.y)
             );
 
-            Instantiate(_confettiVFX, pos, Quaternion.identity);
+            ParticleSystem instance = Instantiate(_confettiVFX, pos, Quaternion.identity);
+
+            // Resguardo extra: si el prefab no tiene ParticleAutoDestroy o el Stop Action
+            // no esta en Callback, esto lo destruye igual en base a su duracion real.
+            float lifetime = instance.main.duration + instance.main.startLifetime.constantMax + 0.5f;
+            Destroy(instance.gameObject, lifetime);
 
             yield return new WaitForSeconds(_confettiSpreadDelay);
         }
