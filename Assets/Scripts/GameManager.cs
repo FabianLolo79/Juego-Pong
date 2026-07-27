@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     // string = el mensaje a mostrar. En el temporal, el float es cuantos segundos dura.
     public static event System.Action<string> OnPermanentMessage;
     public static event System.Action<string, float> OnTemporaryMessage;
+    public static event System.Action OnGoalScored; // cada vez que alguien anota (incluido el gol que gana el partido)
+    public static event System.Action OnMatchWon;    // ademas del gol, el "extra" de festejo por ganar
 
     [SerializeField] private TMP_Text _paddleScore1Text;
     [SerializeField] private TMP_Text _paddleScore2Text;
@@ -39,19 +41,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource _crowdGameAudio;
-    [SerializeField] private AudioSource _goalAudio;
 
     [Header("VFX - Feedback de gol (marcador)")]
     [SerializeField] private float _punchScale = 1.3f;
     [SerializeField] private float _punchDuration = 0.12f;
-
-    [Header("VFX - Confetti (estilo fuegos artificiales)")]
-    [SerializeField] private ParticleSystem _confettiVFX;
-    [SerializeField] private int _confettiBurstsPerGoal = 3;
-    [SerializeField] private int _confettiBurstsOnWin = 6;
-    [SerializeField] private float _confettiSpreadDelay = 0.12f;
-    [SerializeField] private Vector2 _confettiAreaMin = new Vector2(-6f, -3.5f);
-    [SerializeField] private Vector2 _confettiAreaMax = new Vector2(6f, 3.5f);
 
     private int _paddleScore1;
     private int _paddleScore2;
@@ -128,8 +121,7 @@ public class GameManager : MonoBehaviour
 
     private void PlayGoal()
     {
-        _goalAudio?.Play();
-        StartCoroutine(ConfettiFireworks(_confettiBurstsPerGoal));
+        OnGoalScored?.Invoke();
     }
 
     // Revisa si hay ganador o si toca avisar "gol de oro" (empate a un gol del limite)
@@ -158,7 +150,7 @@ public class GameManager : MonoBehaviour
         _matchEnded = true;
 
         OnPermanentMessage?.Invoke($"GANO {winnerName}!");
-        StartCoroutine(ConfettiFireworks(_confettiBurstsOnWin));
+        OnMatchWon?.Invoke();
 
         if (_matchEndPanel != null)
             _matchEndPanel.SetActive(true);
@@ -208,30 +200,6 @@ public class GameManager : MonoBehaviour
         }
 
         text.transform.localScale = originalScale;
-    }
-
-    // Dispara el mismo prefab de confetti en varias posiciones aleatorias, con un pequeno
-    // delay entre cada uno para que se sienta como una tanda de fuegos artificiales.
-    private IEnumerator ConfettiFireworks(int burstCount)
-    {
-        if (_confettiVFX == null) yield break;
-
-        for (int i = 0; i < burstCount; i++)
-        {
-            Vector2 pos = new Vector2(
-                Random.Range(_confettiAreaMin.x, _confettiAreaMax.x),
-                Random.Range(_confettiAreaMin.y, _confettiAreaMax.y)
-            );
-
-            ParticleSystem instance = Instantiate(_confettiVFX, pos, Quaternion.identity);
-
-            // Resguardo extra: si el prefab no tiene ParticleAutoDestroy o el Stop Action
-            // no esta en Callback, esto lo destruye igual en base a su duracion real.
-            float lifetime = instance.main.duration + instance.main.startLifetime.constantMax + 0.5f;
-            Destroy(instance.gameObject, lifetime);
-
-            yield return new WaitForSeconds(_confettiSpreadDelay);
-        }
     }
 
     public void Restart()

@@ -1323,6 +1323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 576565003}
   - component: {fileID: 576565002}
+  - component: {fileID: 576565004}
   m_Layer: 0
   m_Name: Sfx_Goal
   m_TagString: Untagged
@@ -1442,6 +1443,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &576565004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576565001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abefcb0cac236744baaf47b2274175e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoalAudioPlayer
+  _goalAudio: {fileID: 576565002}
 --- !u!1 &581069732
 GameObject:
   m_ObjectHideFlags: 0
@@ -3112,15 +3126,8 @@ MonoBehaviour:
   _firstSelectedMatchEnd: {fileID: 1191344220}
   _menuSceneName: Menu
   _crowdGameAudio: {fileID: 524743977}
-  _goalAudio: {fileID: 576565002}
   _punchScale: 1.3
   _punchDuration: 0.12
-  _confettiVFX: {fileID: 1038759595924055771, guid: cb29d71833ad26c428e3355614acaf4d, type: 3}
-  _confettiBurstsPerGoal: 5
-  _confettiBurstsOnWin: 10
-  _confettiSpreadDelay: 0.12
-  _confettiAreaMin: {x: -6, y: -3.5}
-  _confettiAreaMax: {x: 6, y: 3.5}
 --- !u!4 &1134631423
 Transform:
   m_ObjectHideFlags: 0
@@ -4407,6 +4414,56 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1824924227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1824924229}
+  - component: {fileID: 1824924228}
+  m_Layer: 0
+  m_Name: Vfx_Confetti
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1824924228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824924227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23b5f53ec217ca4baba68122353ad74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConfettiSpawner
+  _confettiVFX: {fileID: 1038759595924055771, guid: cb29d71833ad26c428e3355614acaf4d, type: 3}
+  _burstsPerGoal: 3
+  _burstsOnWin: 6
+  _spreadDelay: 0.12
+  _areaMin: {x: -6, y: -3.5}
+  _areaMax: {x: 6, y: 3.5}
+--- !u!4 &1824924229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824924227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 865.7012, y: 486.16153, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1902992101
 GameObject:
   m_ObjectHideFlags: 0
@@ -4921,3 +4978,4 @@ SceneRoots:
   - {fileID: 576565003}
   - {fileID: 896120284}
   - {fileID: 2086432813}
+  - {fileID: 1824924229}
