@@ -7,6 +7,11 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    // Los "megafonos": cualquier script se puede suscribir sin que GameManager sepa que existen.
+    // string = el mensaje a mostrar. En el temporal, el float es cuantos segundos dura.
+    public static event System.Action<string> OnPermanentMessage;
+    public static event System.Action<string, float> OnTemporaryMessage;
+
     [SerializeField] private TMP_Text _paddleScore1Text;
     [SerializeField] private TMP_Text _paddleScore2Text;
     [SerializeField] private Transform _paddle1Transform;
@@ -21,8 +26,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Reglas del partido")]
     [SerializeField] private int _scoreToWin = 5;
-    [Tooltip("Texto SIEMPRE visible en pantalla: avisa empate/gol de oro y el ganador final.")]
-    [SerializeField] private TMP_Text _matchMessageText;
 
     [Header("Panel de fin de partido")]
     [Tooltip("Panel oculto por defecto. Se activa solo cuando alguien gana.")]
@@ -53,7 +56,6 @@ public class GameManager : MonoBehaviour
     private int _paddleScore1;
     private int _paddleScore2;
     private bool _matchEnded;
-    private Coroutine _hideMessageRoutine;
     private static GameManager instance;
 
     public static GameManager Instance
@@ -79,8 +81,6 @@ public class GameManager : MonoBehaviour
 
         // Avisos de configuracion para detectar en el Editor lo que falta conectar,
         // en vez de que "no pase nada" en silencio.
-        if (_matchMessageText == null)
-            Debug.LogWarning("[GameManager] Falta asignar _matchMessageText en el Inspector: el aviso de empate/ganador no se va a ver.");
         if (_leftPlayerNameText == null)
             Debug.LogWarning("[GameManager] Falta asignar _leftPlayerNameText en el Inspector: no se va a ver el nombre del jugador Azul.");
         if (_rightPlayerNameText == null)
@@ -92,8 +92,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _crowdGameAudio?.Play();
-        if (_matchMessageText != null)
-            _matchMessageText.text = string.Empty;
 
         if (_leftPlayerNameText != null)
             _leftPlayerNameText.text = MenuConfig.LeftPlayerName;
@@ -151,7 +149,7 @@ public class GameManager : MonoBehaviour
         }
         else if (isTiedBeforeWin)
         {
-            ShowTemporaryMessage($"EMPATE {_paddleScore1}-{_paddleScore2}. GOL DE ORO: el proximo gol define el partido!", 2f);
+            OnTemporaryMessage?.Invoke($"EMPATE {_paddleScore1}-{_paddleScore2}. GOL DE ORO: el proximo gol define el partido!", 2f);
         }
     }
 
@@ -159,15 +157,7 @@ public class GameManager : MonoBehaviour
     {
         _matchEnded = true;
 
-        // Si habia un "esconder mensaje" programado por un empate previo, lo cancelamos
-        // para que no borre el mensaje de "Gano X" que estamos por mostrar.
-        if (_hideMessageRoutine != null)
-        {
-            StopCoroutine(_hideMessageRoutine);
-            _hideMessageRoutine = null;
-        }
-
-        ShowMessage($"GANO {winnerName}!");
+        OnPermanentMessage?.Invoke($"GANO {winnerName}!");
         StartCoroutine(ConfettiFireworks(_confettiBurstsOnWin));
 
         if (_matchEndPanel != null)
@@ -180,35 +170,6 @@ public class GameManager : MonoBehaviour
             if (_firstSelectedMatchEnd != null)
                 EventSystem.current.SetSelectedGameObject(_firstSelectedMatchEnd.gameObject);
         }
-    }
-
-    private void ShowMessage(string msg)
-    {
-        if (_matchMessageText != null)
-            _matchMessageText.text = msg;
-    }
-
-    // Muestra un mensaje que se borra solo despues de "seconds" (usado para el aviso de empate,
-    // que es informativo pero el partido sigue jugandose).
-    private void ShowTemporaryMessage(string msg, float seconds)
-    {
-        ShowMessage(msg);
-
-        if (_hideMessageRoutine != null)
-            StopCoroutine(_hideMessageRoutine);
-
-        _hideMessageRoutine = StartCoroutine(HideMessageAfter(seconds));
-    }
-
-    private IEnumerator HideMessageAfter(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-
-        // Si mientras tanto el partido termino, no pisamos el mensaje de "Gano X"
-        if (!_matchEnded)
-            ShowMessage(string.Empty);
-
-        _hideMessageRoutine = null;
     }
 
     // Recarga la escena actual (Game) para volver a jugar desde 0 - forma mas simple y
