@@ -4,15 +4,16 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     // Los "megafonos": cualquier script se puede suscribir sin que GameManager sepa que existen.
     // string = el mensaje a mostrar. En el temporal, el float es cuantos segundos dura.
-    public static event System.Action<string> OnPermanentMessage;
-    public static event System.Action<string, float> OnTemporaryMessage;
-    public static event System.Action OnGoalScored; // cada vez que alguien anota (incluido el gol que gana el partido)
-    public static event System.Action OnMatchWon;    // ademas del gol, el "extra" de festejo por ganar
+    public static event Action<string> OnPermanentMessage;
+    public static event Action<string, float> OnTemporaryMessage;
+    public static event Action OnGoalScored; // cada vez que alguien anota (incluido el gol que gana el partido)
+    public static event Action OnMatchWon;    // ademas del gol, el "extra" de festejo por ganar
 
     [SerializeField] private TMP_Text _paddleScore1Text;
     [SerializeField] private TMP_Text _paddleScore2Text;
