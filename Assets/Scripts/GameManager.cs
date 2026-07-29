@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         get
         {
             if (instance == null)
-                instance = FindObjectOfType<GameManager>();
+                instance = FindFirstObjectByType<GameManager>();
             return instance;
         }
     }
