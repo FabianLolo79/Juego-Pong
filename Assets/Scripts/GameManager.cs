@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource _crowdGameAudio;
+    [SerializeField] private AudioSource _ambientGameAudio;
 
     [Header("VFX - Feedback de gol (marcador)")]
     [SerializeField] private float _punchScale = 1.3f;
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _crowdGameAudio?.Play();
+        _ambientGameAudio?.Play();
 
         if (_leftPlayerNameText != null)
             _leftPlayerNameText.text = MenuConfig.LeftPlayerName;
